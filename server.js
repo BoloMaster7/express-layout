@@ -12,15 +12,6 @@ app.use(express.static(path.join(__dirname, '/layouts')));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.post('/contact/send-message', (req, res) => {
-  const { author, sender, title, message} = req.body;
-  if(author && sender && title && message){
-    res.render('contact', { isSent: true });
-  } else {
-    res.render('contact', { isError: true });
-  };
-});
-
 app.get('/', (req, res) => {
   res.render('index');
 });
@@ -32,10 +23,6 @@ app.get('/hello/:name', (req, res) => {
 app.get('/about', (req, res) => {
   res.render('about', { layout: 'dark' });
 });
-
-// app.get('/about', (req, res) => {
-//   res.render('about.hbs', { layout: 'dark' });
-// });
 
 app.get('/info', (req, res) => {
   res.render('info');
@@ -49,15 +36,19 @@ app.use((req, res) => {
   res.status(404).send('404 not found...');
 })
 
-// app.use(
-//   express.static(__dirname + 'views/public')
-//   );
-
 app.get('/contact', (req, res) => {
-  res.render('contact');
+  res.render('contact');  
 });
-
 
 app.listen(8000, () => {
   console.log('Server is running on port: 8000');
+});
+
+app.post('/contact/send-message', (req, res) => {
+  const { author, sender, title, message} = req.body;
+  if(author && sender && title && message){
+    res.render('contact', { isSent: true });
+  } else {
+    res.render('contact', { isError: true });
+  };
 });
